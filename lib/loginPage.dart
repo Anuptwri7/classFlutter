@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:classtest/ui/homepage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
@@ -22,24 +24,12 @@ class _LoginPageState extends State<LoginPage> {
     String password = _passwordController.text.trim();
 
     if (email.isEmpty || password.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Please enter both email and password"),
-          backgroundColor: Colors.red,
-        ),
-      );
+
       return;
     }
     postLogin();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text("Email: $email\nPassword: $password"),
-        backgroundColor: Colors.green,
-      ),
-    );
+
   }
-
-
 
   Future postLogin() async {
     final response = await http.post(
@@ -53,11 +43,20 @@ class _LoginPageState extends State<LoginPage> {
           "password":_passwordController.text.toString(),
         }));
 
-
+    if(response.statusCode==200){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage()));
+    }else{
+      Fluttertoast.showToast(
+          msg: "Invalid credentials",
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+    }
     return response;
   }
-
-
 
   @override
   Widget build(BuildContext context) {
