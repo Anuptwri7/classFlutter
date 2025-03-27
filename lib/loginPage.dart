@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:classtest/ui/forgetPassword.dart';
 import 'package:classtest/ui/homepage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
@@ -146,6 +147,19 @@ class _LoginPageState extends State<LoginPage> {
                     ),
 
                 ),
+                const SizedBox(height: 50),
+                 Align(
+                   alignment: Alignment.centerRight,
+                   child: GestureDetector(
+                     onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>ForgetPassword()));
+                     },
+                     child: Text(
+                      "Forget Password",
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                   ),
+                 ),
                 const SizedBox(height: 50),
                 Center(
                   child: SizedBox(
